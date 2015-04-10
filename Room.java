@@ -61,7 +61,7 @@ public class Room
     {
         return description;
     }
-    
+
     public Room getExit(String direccion)
     {
         Room coordenada = null;
@@ -85,7 +85,35 @@ public class Room
         {
             coordenada = southEastExit;
         }
-        
+
         return coordenada;
+    }
+
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public String getExitString()
+    {
+        String existe = "existe ";
+        if(getExit("north") != null) {
+            existe += " north ";
+        }
+        if(getExit("east") != null) {
+            existe += " east ";
+        }
+        if(getExit("south") != null) {
+            existe += " south";
+        }
+        if(getExit("west") != null) {
+            existe += " west ";
+        }
+        if(getExit("southEast") != null) {
+            existe += " southEast ";
+        }
+        return existe;
+          
     }
 }

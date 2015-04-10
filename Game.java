@@ -44,12 +44,12 @@ public class Game
         piernaDer = new Room("Te has desplazado a la pierna derecha.");
         piernaIz = new Room("Te has desplazado a la pierna izquierda.");
         // initialise room exits
-        cabeza.setExits(null, null, tronco, brazoIz, piernaDer);
-        brazoDer.setExits(null, null, null, cabeza, null);
-        brazoIz.setExits(null, cabeza, null, null, null);
-        tronco.setExits(cabeza, null , null, piernaIz, piernaDer);
-        piernaDer.setExits(null, null, null, tronco, null);
-        piernaIz.setExits(null,tronco, null, null, null);
+        cabeza.setExits(null, null, tronco, brazoIz, piernaDer, null);
+        brazoDer.setExits(null, null, null, null, null, cabeza);
+        brazoIz.setExits(null, cabeza, null, null, null, null);
+        tronco.setExits(cabeza, null , null, piernaIz, piernaDer, null);
+        piernaDer.setExits(null, null, null, tronco, null, null);
+        piernaIz.setExits(null,tronco, null, null, null, null);
 
         currentRoom = cabeza;  // start game outside       
     }

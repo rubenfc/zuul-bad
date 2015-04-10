@@ -11,7 +11,7 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -34,25 +34,24 @@ public class Game
      */
     private void createRooms()
     {
-        Room cabeza, tronco, brazoIz, brazoDe, piernaIz, piernaDe;
+        Room cabeza, brazoDer, brazoIz, tronco, piernaDer, piernaIz;
 
         // create the rooms
-        cabeza = new Room("cabeza");
-        tronco = new Room(" en el tronco");
-        brazoIz = new Room(" en el brazo izquierdo");
-        brazoDe = new Room(" en el brazo derecho");
-        piernaIz = new Room(" en la pierna izquierda");
-        piernaDe = new Room(" en la pierna derecha");
-
+        cabeza = new Room("Estas en la cabeza, es el inicio del juego.");
+        brazoDer = new Room("Te has desplazado al brazo derecho.");
+        brazoIz = new Room("Te has desplazado al brazo izquierdo.");
+        tronco = new Room("Estas en el tronco");
+        piernaDer = new Room("Te has desplazado a la pierna derecha.");
+        piernaIz = new Room("Te has desplazado a la pierna izquierda.");
         // initialise room exits
-        cabeza.setExits(null, brazoIz, tronco, brazoDe);
-        tronco.setExits(cabeza, piernaIz, null, piernaDe );
-        brazoIz.setExits(null, null, null, cabeza);
-        brazoDe.setExits(null, cabeza, null, null);
-        piernaIz.setExits(null, null, null, tronco);
-        piernaDe.setExits(null, tronco, null, null);
+        cabeza.setExits(null, null, tronco, brazoIz, piernaDer);
+        brazoDer.setExits(null, null, null, cabeza, null);
+        brazoIz.setExits(null, cabeza, null, null, null);
+        tronco.setExits(cabeza, null , null, piernaIz, piernaDer);
+        piernaDer.setExits(null, null, null, tronco, null);
+        piernaIz.setExits(null,tronco, null, null, null);
 
-        currentRoom = cabeza;  // start game outside
+        currentRoom = cabeza;  // start game outside       
     }
 
     /**
@@ -83,9 +82,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        printLocalitionInfo();
+        printLocationInfo();
         System.out.println();
     }
 
@@ -127,7 +124,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Dentro del cuerpo humano.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
@@ -150,27 +147,28 @@ public class Game
         // Try to leave current room.
         Room nextRoom = null;
         if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
+            nextRoom = currentRoom.getExit("north");
         }
         if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
+            nextRoom = currentRoom.getExit("east");
         }
         if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
+            nextRoom = currentRoom.getExit("south");
         }
         if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
+            nextRoom = currentRoom.getExit("west");
+        }
+          if(direction.equals("southEast")) {
+            nextRoom = currentRoom.getExit("soutEast");
         }
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("No hay ninguna parte del cuerpo");
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            
-            printLocalitionInfo();
+            printLocationInfo();
+            System.out.println();
         }
     }
 
@@ -190,20 +188,24 @@ public class Game
         }
     }
 
-    private void printLocalitionInfo()
+    private void printLocationInfo()
     {
-        if(currentRoom.northExit != null) {
+        System.out.println(currentRoom.getDescription());
+        System.out.print("Exits: ");
+        if(currentRoom.getExit("north") != null) {
             System.out.print("north ");
         }
-        if(currentRoom.eastExit != null) {
+        if(currentRoom.getExit("east") != null) {
             System.out.print("east ");
         }
-        if(currentRoom.southExit != null) {
+        if(currentRoom.getExit("south") != null) {
             System.out.print("south ");
         }
-        if(currentRoom.westExit != null) {
+        if(currentRoom.getExit("west") != null) {
             System.out.print("west ");
         }
-        System.out.println();
+        if(currentRoom.getExit("southEast") != null) {
+            System.out.print("southEast ");
+        }
     }
 }

@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Iterator;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -21,6 +23,7 @@ public class Room
     private Room westExit;
     private Room southEastExit;
     private Room northWestExit;
+    private HashMap<String, Room> habitaciones;
 
     /**
      * Create a room described "description". Initially, it has
@@ -44,17 +47,31 @@ public class Room
     public void setExits(Room north, Room east, Room south, Room west, Room southEast, Room northWest) 
     {
         if(north != null)
+        {
             northExit = north;
+            habitaciones.put("north", north);
+        }
         if(east != null)
+        {
             eastExit = east;
-        if(south != null)
+            habitaciones.put("east", east);
+        }
+        if(south != null){
             southExit = south;
-        if(west != null)
+            habitaciones.put("south", south);
+        }
+        if(west != null){
             westExit = west;
-        if(southEast != null)
+            habitaciones.put("west", west);
+        }
+        if(southEast != null){
             southEastExit = southEast;
-        if(northWest != null)
+            habitaciones.put("southEast", southEast);
+        }
+        if(northWest != null){
             northWestExit = northWest;
+            habitaciones.put("northWest", northWest);
+        }
     }
 
     /**
@@ -67,33 +84,35 @@ public class Room
 
     public Room getExit(String direccion)
     {
-        Room coordenada = null;
-        if(direccion.equals("north"))
-        {
-            coordenada = northExit;
-        }
-        else if( direccion.equals("south"))
-        {
-            coordenada = southExit;
-        }
-        else if(direccion.equals("east"))
-        {
-            coordenada = eastExit;
-        }
-        else if(direccion.equals("west"))
-        {
-            coordenada = westExit;
-        }
-        else if(direccion.equals("southEast"))
-        {
-            coordenada = southEastExit;
-        }
-        else if (direccion.equals("northWest"))
-        {
-            coordenada = northWestExit;
-        }
+        //Room coordenada = null;
+        //if(direccion.equals("north"))
+        //{
+        //  coordenada = northExit;
+        //}
+        //else if( direccion.equals("south"))
+        //{
+        //  coordenada = southExit;
+        //}
+        //else if(direccion.equals("east"))
+        //{
+        //  coordenada = eastExit;
+        //}
+        //else if(direccion.equals("west"))
+        //{
+        //  coordenada = westExit;
+        //}
+        //else if(direccion.equals("southEast"))
+        //{
+        //  coordenada = southEastExit;
+        //}
+        //else if (direccion.equals("northWest"))
+        //{
+        //  coordenada = northWestExit;
+        //}
 
-        return coordenada;
+        //return coordenada;
+        Room habita = habitaciones.get(direccion);
+        return habita;
     }
 
     /**
@@ -105,25 +124,31 @@ public class Room
     public String getExitString()
     {
         String existe = "existe ";
-        if(getExit("north") != null) {
-            existe += " north ";
-        }
-        if(getExit("east") != null) {
-            existe += " east ";
-        }
-        if(getExit("south") != null) {
-            existe += " south";
-        }
-        if(getExit("west") != null) {
-            existe += " west ";
-        }
-        if(getExit("southEast") != null) {
-            existe += " southEast ";
-        }
-        if(getExit("northWest") != null) {
-            existe += " northWest ";
+        //if(getExit("north") != null) {
+        //  existe += " north ";
+        //}
+        //if(getExit("east") != null) {
+        //  existe += " east ";
+        //}
+        //if(getExit("south") != null) {
+        //  existe += " south";
+        //}
+        //if(getExit("west") != null) {
+        //  existe += " west ";
+        //}
+        //if(getExit("southEast") != null) {
+        //  existe += " southEast ";
+        //}
+        //if(getExit("northWest") != null) {
+        //  existe += " northWest ";
+        //}
+        //return existe;
+        
+        Iterator it = habitaciones.entrySet().iterator();
+        while (it.hasNext()) {
+            
+            existe += it.next( );
         }
         return existe;
-          
     }
 }

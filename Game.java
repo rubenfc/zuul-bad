@@ -145,23 +145,8 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.getExit("north");
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.getExit("east");
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.getExit("south");
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.getExit("west");
-        }
-          if(direction.equals("southEast")) {
-            nextRoom = currentRoom.getExit("soutEast");
-        }
-
+        Room nextRoom = currentRoom.getExit(direction);
+        
         if (nextRoom == null) {
             System.out.println("No hay ninguna parte del cuerpo");
         }

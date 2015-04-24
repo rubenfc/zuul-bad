@@ -1,5 +1,8 @@
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.ArrayList;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -17,13 +20,8 @@ import java.util.Iterator;
 public class Room 
 {
     private String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
-    private Room southEastExit;
-    private Room northWestExit;
-    private HashMap<String, Room> habitaciones;
+    private HashMap<String, Room> salidas;
+    private ArrayList<Item> objetos;
 
     /**
      * Create a room described "description". Initially, it has
@@ -34,44 +32,18 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
+        salidas = new HashMap<String, Room>();
+        objetos = new ArrayList<Item>();
     }
 
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
+     * Añade una salida a la habitacion. Cada salida debe componerse de una salida y una habitacion.
+     * @param dir Nombre de la salida.
+     * @param room Habitación que se encuentra tras esa salida.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room southEast, Room northWest) 
+    public void setExit(String dir, Room room)
     {
-        if(north != null)
-        {
-            northExit = north;
-            habitaciones.put("north", north);
-        }
-        if(east != null)
-        {
-            eastExit = east;
-            habitaciones.put("east", east);
-        }
-        if(south != null){
-            southExit = south;
-            habitaciones.put("south", south);
-        }
-        if(west != null){
-            westExit = west;
-            habitaciones.put("west", west);
-        }
-        if(southEast != null){
-            southEastExit = southEast;
-            habitaciones.put("southEast", southEast);
-        }
-        if(northWest != null){
-            northWestExit = northWest;
-            habitaciones.put("northWest", northWest);
-        }
+        salidas.put(dir, room);
     }
 
     /**
@@ -82,37 +54,16 @@ public class Room
         return description;
     }
 
-    public Room getExit(String direccion)
+    /**
+     * Devuelve la habitación que se encuentra en la direccion indicada como parametro
+     * @param dir Dirección por la que quiere salir
+     * @return la habitación que se encuentra en esa dirección, o null si no hay ninguna
+     */
+    public Room getExit(String dir)
     {
-        //Room coordenada = null;
-        //if(direccion.equals("north"))
-        //{
-        //  coordenada = northExit;
-        //}
-        //else if( direccion.equals("south"))
-        //{
-        //  coordenada = southExit;
-        //}
-        //else if(direccion.equals("east"))
-        //{
-        //  coordenada = eastExit;
-        //}
-        //else if(direccion.equals("west"))
-        //{
-        //  coordenada = westExit;
-        //}
-        //else if(direccion.equals("southEast"))
-        //{
-        //  coordenada = southEastExit;
-        //}
-        //else if (direccion.equals("northWest"))
-        //{
-        //  coordenada = northWestExit;
-        //}
-
-        //return coordenada;
-        Room habita = habitaciones.get(direccion);
-        return habita;
+        Room salida = null;
+        salida = salidas.get(dir);
+        return salida;
     }
 
     /**
@@ -123,32 +74,86 @@ public class Room
      */
     public String getExitString()
     {
-        String existe = "existe ";
-        //if(getExit("north") != null) {
-        //  existe += " north ";
-        //}
-        //if(getExit("east") != null) {
-        //  existe += " east ";
-        //}
-        //if(getExit("south") != null) {
-        //  existe += " south";
-        //}
-        //if(getExit("west") != null) {
-        //  existe += " west ";
-        //}
-        //if(getExit("southEast") != null) {
-        //  existe += " southEast ";
-        //}
-        //if(getExit("northWest") != null) {
-        //  existe += " northWest ";
-        //}
-        //return existe;
-        
-        Iterator it = habitaciones.entrySet().iterator();
-        while (it.hasNext()) {
-            
-            existe += it.next( );
+        String descripcion = "";
+        // Itera sobre el hashMap, si la habitacion no es null
+        // guarda la key de la dirección
+        Iterator it = salidas.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<String, Room> pair = (Map.Entry)it.next();
+            Room habitacion = pair.getValue();
+            if(habitacion != null)
+            {
+                descripcion = descripcion + pair.getKey() + " ";
+            }
         }
-        return existe;
+        return descripcion;
     }
+
+    /**
+     * Return a long description of this room, of the form:
+     *     You are in the 'name of room'
+     *     Exits: north west southwest
+     * @return A description of the room, including exits.
+     */
+    public String getLongDescription()
+    {
+        String descr = "";
+        descr = "\nEstas en " + description + "\nSalidas: " + getExitString();
+        // Si hay algun objeto en la habitación, lo incluye en la descripción
+        if (objetos.size() > 0)
+        {
+            descr += "\nVes los siguientes objetos:";
+            for(int i = 0; i < objetos.size(); i++)
+            {
+                descr += "\n- " + objetos.get(i).getLongDescription();
+            }
+        }
+        else
+        {
+            descr += "\nNo ves nada aqui";
+        }
+        return descr;
+    }
+
+    /**
+     * Añade un objeto a la localización
+     * @param objeto Objeto a añadir a la localización
+     */
+    public void addItem(Item objeto)
+    {
+        objetos.add(objeto);
+    }
+    
+    /**
+     * Busca un objeto en la localización. Si existe lo devuelve,
+     * sino devuelve null.
+     * @return El objeto si contiene, null sino.
+     */
+    public Item search(String nombre)
+    {
+        boolean find = false;
+        int index = 0;
+        Item objeto = null;
+        // Busca el objeto en la localización
+        while((index < objetos.size()) & (!find))
+        {
+            if(nombre.equals(objetos.get(index).getNombreObj()))
+            {
+                objeto = objetos.get(index);
+                find = true;
+            }
+            index++;
+        }
+        return objeto;
+    }
+    
+    /**
+     * Elimina un objeto de la localización
+     */
+    public void remove(Item objeto)
+    {
+        objetos.remove(objeto);
+    }
+
 }

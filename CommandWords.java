@@ -5,7 +5,7 @@
  * This class holds an enumeration of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -13,8 +13,8 @@ public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-        "go", "quit", "help"
-    };
+            "ir", "terminar", "ayuda", "examinar", "comer", "volver", "coger", "soltar", "objetos"
+        };
 
     /**
      * Constructor - initialise the command words.
@@ -37,5 +37,17 @@ public class CommandWords
         }
         // if we get here, the string was not found in the commands
         return false;
+    }
+
+    /**
+     * Print all valid commands to System.out
+     */
+    public void showAll()
+    {
+        String commands = "Los comandos son: \n";
+        for(int i = 0; i < validCommands.length; i++){
+            commands = commands + validCommands[i] + " ";
+        }
+        System.out.println(commands);
     }
 }

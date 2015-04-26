@@ -121,38 +121,38 @@ public class Game
     {
         boolean wantToQuit = false;
 
-        if(command.isUnknown()) {
-            System.out.println("No entiendo las instrucciones");
-            return false;
-        }
+        //         if(command.isUnknown()) {
+            //             System.out.println("No entiendo las instrucciones");
+            //             return false;
+            //         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("ayuda")) {
+        Option commandWord = command.getCommandWord();
+        if (commandWord == Option.HELP) {
             printHelp();
         }
-        else if (commandWord.equals("ir")) {
+        else if (commandWord ==  Option.GO) {
             goRoom(command);
         }
-        else if (commandWord.equals("terminar")) {
+        else if (commandWord == Option.QUIT) {
             wantToQuit = quit(command);
         }
-        else if (commandWord.equals("examinar")){
+        else if (commandWord == Option.LOOK){
             player.look();
         }
-        else if (commandWord.equals("comer")){
+        else if (commandWord == Option.EAT){
             player.eat();
         }
-        else if (commandWord.equals("volver")){
+        else if (commandWord == Option.BACK){
             player.goBack();
         }
-        else if (commandWord.equals("coger")){
+        else if (commandWord == Option.TAKE){
             take(command);
         }
-        else if (commandWord.equals("soltar")){
+        else if (commandWord == Option.DROP){
             drop(command);
         }
-        else if(commandWord.equals("objetos")){
-            player.showInventory();
+        else if(commandWord == Option.UNKNOWN){
+            System.out.println("no hay comandos");
         }
         return wantToQuit;
     }

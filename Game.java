@@ -151,9 +151,7 @@ public class Game
         else if (commandWord == Option.DROP){
             drop(command);
         }
-        else if(commandWord == Option.UNKNOWN){
-            System.out.println("no hay comandos");
-        }
+        
         return wantToQuit;
     }
 

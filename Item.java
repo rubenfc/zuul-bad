@@ -32,6 +32,7 @@ public class Item
         this.puedeCogerse = puedeCogerse;
         this.puedeBeberse = puedeBeberse;
         this.esVenenoso = esVenenoso;
+
     }
 
     /**

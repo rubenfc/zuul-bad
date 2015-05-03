@@ -43,26 +43,27 @@ public class Game
         Room entrada, pasillo, caverna, bifurcacion, habitacionTesoro, guarida, camaraOculta, salidaObstruida;
 
         // create the rooms
-        entrada = new Room("la entrada de una mazmorra");
-        pasillo = new Room("un pasillo de la mazmorra");
-        caverna = new Room("una caverna rocosa");
-        bifurcacion = new Room("el camino se divide en dos");
-        habitacionTesoro = new Room("una habitacion del tesoro");
-        guarida = new Room("la guarida del monstruo");
-        camaraOculta = new Room ("en una sala pequeña, a la que entras por un pequeño boquete");
-        salidaObstruida = new Room ("un pasillo que termina en una salida de la mazmorra, obstruida por un derrumbamiento");
+        entrada = new Room("la entrada de una mazmorra", false);
+        pasillo = new Room("un pasillo de la mazmorra", false);
+        caverna = new Room("una caverna rocosa", true);
+        bifurcacion = new Room("el camino se divide en dos", false);
+        habitacionTesoro = new Room("una habitacion del tesoro", false);
+        guarida = new Room("la guarida del monstruo", false);
+        camaraOculta = new Room ("en una sala pequeña, a la que entras por un pequeño boquete", false);
+        salidaObstruida = new Room ("un pasillo que termina en una salida de la mazmorra, obstruida por un derrumbamiento", false);
 
         // Añadimos objetos a las localizaciones
         entrada.addItem(new Item("piedra", "una piedra enorme", 50F, true, false, false));
         entrada.addItem(new Item("antorcha", "una antorcha", 0.5F, true, false, false));
         caverna.addItem(new Item("cubo", "un cubo", 1.0F, true, false, false));
         caverna.addItem(new Item("transparente", "bebida transaparente", 0.5F, false, true, true));
-        caverna.addItem(new Item("negra", "negra", 0.6F, false, true, false));
-        caverna.addItem(new Item("verde", "verde", 0.4F, false, true, true));
-        caverna.addItem(new Item("amarilla", "amarilla", 1.0F, false, true, false));
-        caverna.addItem(new Item("azul", "azul", 0.8F, false, true, false));
+        caverna.addItem(new Item("negra", "bebida negra", 0.6F, false, true, false));
+        caverna.addItem(new Item("verde", "bebida verde", 0.4F, false, true, true));
+        caverna.addItem(new Item("amarilla", "bebida amarilla", 1.0F, false, true, false));
+        caverna.addItem(new Item("azul", "bebida azul", 0.8F, false, true, false));
         bifurcacion.addItem(new Item("piedra", "una piedra", 10.0F, false, false, false));
         habitacionTesoro.addItem(new Item("monedas", "unas monedas de oro", 1.0F, true, false, false));
+        habitacionTesoro.addItem(new Item("llave", "llave de la caverna", 0.1F, true, false, false));
         habitacionTesoro.addItem(new Item("pocion", "una poción", 0.5F, true, false, false));
         guarida.addItem(new Item("espada", "una espada", 2.0F, true, false, false));
 
@@ -192,6 +193,7 @@ public class Game
             return;
         }
 
+            
         String direction = command.getSecondWord();
 
         // Try to leave current room.
@@ -273,4 +275,5 @@ public class Game
     private boolean gameOver(){
         return player.haPerdido();
     }
+    
 }

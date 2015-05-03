@@ -95,6 +95,17 @@ public class Player
         if (nextRoom == null) {
             System.out.println("No puedes continuar por ahí");
         }
+        else if(nextRoom.cerrada())
+        {
+            if(tieneLlave()){
+                setRoom(nextRoom);
+                printLocationInfo();
+                System.out.println();
+            }
+            else{
+                System.out.println("esta habitacion esta cerrada por favor busca la llave");
+            }
+        }
         else {
             setRoom(nextRoom);
             printLocationInfo();
@@ -242,5 +253,15 @@ public class Player
 
     public boolean haPerdido(){
         return gameOver;
+    }
+    
+    public boolean tieneLlave(){
+        Item objeto = search("llave");
+        boolean llave = false;
+        if(objeto != null)
+        {
+            llave = true;
+        }
+        return llave;
     }
 }

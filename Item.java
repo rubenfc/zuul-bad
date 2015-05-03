@@ -1,3 +1,4 @@
+
 /**
  * Esta clase representa los objetos que se pueden encontrar en el juego.
  * Todos los objetos estan definidos por una descripcion y un peso.

@@ -13,7 +13,7 @@
  *
  * If the command had only one word, then the second word is <null>.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
@@ -25,19 +25,19 @@ public class Command
     /**
      * Create a command object. First and second word must be supplied, but
      * either one (or both) can be null.
-     * @param firstWord The first word of the command. Null if the command
+     * @param firstWord The first word of the command. Unknown if the command
      *                  was not recognised.
      * @param secondWord The second word of the command.
      */
     public Command(Option firstWord, String secondWord)
     {
-        commandWord = firstWord;
+        this.commandWord = firstWord;
         this.secondWord = secondWord;
     }
 
     /**
      * Return the command word (the first word) of this command. If the
-     * command was not understood, the result is null.
+     * command was not understood, the result is unknown.
      * @return The command word.
      */
     public Option getCommandWord()
@@ -59,7 +59,7 @@ public class Command
      */
     public boolean isUnknown()
     {
-        return (commandWord == null);
+        return (commandWord == Option.DESCONOCIDO);
     }
 
     /**
@@ -70,4 +70,3 @@ public class Command
         return (secondWord != null);
     }
 }
-

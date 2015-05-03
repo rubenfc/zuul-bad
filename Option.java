@@ -1,20 +1,18 @@
 
 /**
- * Write a description of class Option here.
+ * Enumeration class Option - write a description of the enum class here
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (your name here)
+ * @version (version number or date here)
  */
-public enum Option
-{
-   GO, 
-   QUIT, 
-   HELP, 
-   LOOK,
-   EAT,
-   BACK,
-   TAKE,
-   DROP, 
-   ITEM,
-   UNKNOWN;
-}
+public enum Option {
+    IR("ir"), TERMINAR("terminar"), AYUDA ("ayuda"), 
+    EXAMINAR ("examinar"), COMER ("comer"), VOLVER("volver"), 
+    COGER("coger"), SOLTAR("soltar"), OBJETOS("objetos"), DESCONOCIDO("desconocido");
+    private String command;
+    private Option(String command)
+    {this.command = command;}
+    public String getCommand()
+    {return command;}
+ };
+    

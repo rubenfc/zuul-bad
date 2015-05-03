@@ -106,7 +106,7 @@ public class Game
         System.out.println();
         System.out.println("Bienvenido a World of Zuul!");
         System.out.println("World of Zuul es un nuevo y muy aburrido juego de aventuras");
-        System.out.println("Escribe 'ayuda' para ver la ayuda");
+        System.out.println("Escribe '" + Option.AYUDA.getCommand() +"' para ver la ayuda");
         System.out.println();
         player.look();
         System.out.println();
@@ -121,37 +121,38 @@ public class Game
     {
         boolean wantToQuit = false;
 
-        //         if(command.isUnknown()) {
-            //             System.out.println("No entiendo las instrucciones");
-            //             return false;
-            //         }
-
         Option commandWord = command.getCommandWord();
-        if (commandWord == Option.HELP) {
+        switch(commandWord){
+            case AYUDA:
             printHelp();
-        }
-        else if (commandWord ==  Option.GO) {
+            break;
+            case IR:
             goRoom(command);
-        }
-        else if (commandWord == Option.QUIT) {
+            break;
+            case TERMINAR:
             wantToQuit = quit(command);
-        }
-        else if (commandWord == Option.LOOK){
+            break;
+            case EXAMINAR:
             player.look();
-        }
-        else if (commandWord == Option.EAT){
+            break;
+            case COMER:
             player.eat();
-        }
-        else if (commandWord == Option.BACK){
+            break;
+            case VOLVER:
             player.goBack();
-        }
-        else if (commandWord == Option.TAKE){
+            break;
+            case COGER:
             take(command);
-        }
-        else if (commandWord == Option.DROP){
+            break;
+            case SOLTAR:
             drop(command);
+            break;        
+            case OBJETOS:
+            player.showInventory();
+            break;
+            case DESCONOCIDO:
+            System.out.println("No entiendo las instrucciones");
         }
-        
         return wantToQuit;
     }
 
@@ -191,7 +192,7 @@ public class Game
     private void take(Command command) 
     {
         if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
+            // if there is no second word, we don't know what to take...
             System.out.println("¿Que quieres coger?");
             return;
         }
@@ -208,7 +209,7 @@ public class Game
     private void drop(Command command) 
     {
         if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
+            // if there is no second word, we don't know what to drop...
             System.out.println("¿Que quieres soltar");
             return;
         }

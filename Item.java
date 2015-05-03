@@ -16,16 +16,22 @@ public class Item
     private float peso;
     // Indica si el objeto puede o no ser cogido por el jugador
     private boolean puedeCogerse;
+    //indica si puede beberse
+    private boolean puedeBeberse;
+    //indica en caso de que pueda beberse, si es venenosos
+    private boolean esVenenoso;
 
     /**
      * Constructor de items. Crea un objeto item con una descripción y un peso dados.
      */
-    public Item( String nombreObj, String desc, float peso, boolean puedeCogerse)
+    public Item( String nombreObj, String desc, float peso, boolean puedeCogerse, boolean puedeBeberse, boolean esVenenoso)
     {
         this.nombreObj = nombreObj;
         this.descripcionObj = desc;
         this.peso = peso;
         this.puedeCogerse = puedeCogerse;
+        this.puedeBeberse = puedeBeberse;
+        this.esVenenoso = esVenenoso;
     }
 
     /**
@@ -73,5 +79,12 @@ public class Item
         String info = descripcionObj + " que pesa " + peso;
         return info;
     }
-
+    
+    public boolean puedeBeberse(){
+        return puedeBeberse;
+    }
+    
+    public boolean esVenenoso(){
+        return esVenenoso;
+    }
 }

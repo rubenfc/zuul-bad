@@ -20,6 +20,8 @@ public class Player
     private float maxCarry;
     // El peso que lleva ahora el jugador
     private float currentCarry;
+    //indica si ha perdido
+    private boolean gameOver;
 
     /**
      * Constructor del jugador
@@ -32,6 +34,7 @@ public class Player
         this.maxCarry = maxCarry;
         // Al inicio el peso del jugador es 0.
         currentCarry = 0;
+        gameOver = false;
     }
 
     /**
@@ -210,5 +213,34 @@ public class Player
     private void printLocationInfo()
     {
         System.out.println(currentRoom.getLongDescription());
+    }
+
+    public void beber(String objeto){
+        Item tempObj = currentRoom.search(objeto);
+        if(tempObj == null){
+            System.out.println("el objeto no existe");
+        }
+        else if(tempObj.puedeBeberse())
+        {
+            if(tempObj.esVenenoso()){
+                System.out.println("la bebida era venenoso, GAME OVER");
+                pierde();
+            }
+            else{
+                System.out.println("acabas de beber");
+            }
+            currentRoom.remove(tempObj);
+        }
+        else{
+            System.out.println("este objeto no se puede beber");
+        }
+    }
+
+    public void pierde(){
+        gameOver = true;
+    }
+
+    public boolean haPerdido(){
+        return gameOver;
     }
 }

@@ -53,13 +53,18 @@ public class Game
         salidaObstruida = new Room ("un pasillo que termina en una salida de la mazmorra, obstruida por un derrumbamiento");
 
         // Añadimos objetos a las localizaciones
-        entrada.addItem(new Item("piedra", "una piedra enorme", 50F, true));
-        entrada.addItem(new Item("antorcha", "una antorcha", 0.5F, true));
-        caverna.addItem(new Item("cubo", "un cubo", 1.0F, true));
-        bifurcacion.addItem(new Item("piedra", "una piedra", 10.0F, false));
-        habitacionTesoro.addItem(new Item("monedas", "unas monedas de oro", 1.0F, true));
-        habitacionTesoro.addItem(new Item("pocion", "una poción", 0.5F, true));
-        guarida.addItem(new Item("espada", "una espada", 2.0F, true));
+        entrada.addItem(new Item("piedra", "una piedra enorme", 50F, true, false, false));
+        entrada.addItem(new Item("antorcha", "una antorcha", 0.5F, true, false, false));
+        caverna.addItem(new Item("cubo", "un cubo", 1.0F, true, false, false));
+        caverna.addItem(new Item("transparente", "bebida transaparente", 0.5F, false, true, true));
+        caverna.addItem(new Item("negra", "negra", 0.6F, false, true, false));
+        caverna.addItem(new Item("verde", "verde", 0.4F, false, true, true));
+        caverna.addItem(new Item("amarilla", "amarilla", 1.0F, false, true, false));
+        caverna.addItem(new Item("azul", "azul", 0.8F, false, true, false));
+        bifurcacion.addItem(new Item("piedra", "una piedra", 10.0F, false, false, false));
+        habitacionTesoro.addItem(new Item("monedas", "unas monedas de oro", 1.0F, true, false, false));
+        habitacionTesoro.addItem(new Item("pocion", "una poción", 0.5F, true, false, false));
+        guarida.addItem(new Item("espada", "una espada", 2.0F, true, false, false));
 
         // initialise room exits (norte, este, sur, oeste, sureste, noroeste)
         entrada.setExit("este", pasillo);
@@ -150,7 +155,10 @@ public class Game
             case OBJETOS:
             player.showInventory();
             break;
-            case DESCONOCIDO:
+            case BEBER:
+            beber (command);
+            break;          
+            case DESCONOCIDO:  
             System.out.println("No entiendo las instrucciones");
         }
         return wantToQuit;
@@ -174,7 +182,11 @@ public class Game
      */
     private void goRoom(Command command) 
     {
-        if(!command.hasSecondWord()) {
+        if(gameOver()){
+            System.out.println("lo siento has perdido");
+            return;
+        }
+        else if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("¿A donde quieres ir?");
             return;
@@ -191,7 +203,11 @@ public class Game
      */
     private void take(Command command) 
     {
-        if(!command.hasSecondWord()) {
+        if(gameOver()){
+            System.out.println("lo siento has perdido");
+            return;
+        }
+        else if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to take...
             System.out.println("¿Que quieres coger?");
             return;
@@ -208,7 +224,11 @@ public class Game
      */
     private void drop(Command command) 
     {
-        if(!command.hasSecondWord()) {
+        if(gameOver()){
+            System.out.println("lo siento has perdido");
+            return;
+        }
+        else if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("¿Que quieres soltar");
             return;
@@ -218,6 +238,20 @@ public class Game
 
         // Intenta soltar un objeto
         player.dropItem(objeto);
+    }
+    
+    private void beber(Command command){
+        if(gameOver()){
+            System.out.println("lo siento has perdido");
+            return;
+        }
+        else if(!command.hasSecondWord()){
+         System.out.println("que quieres beber");
+         return;
+        }
+        String objeto = command.getSecondWord();
+        
+        player.beber(objeto);
     }
 
     /** 
@@ -235,5 +269,8 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-
+    
+    private boolean gameOver(){
+        return player.haPerdido();
+    }
 }

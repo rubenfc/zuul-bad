@@ -106,6 +106,9 @@ public class Player
                 System.out.println("esta habitacion esta cerrada por favor busca la llave");
             }
         }
+        else if(!currentRoom.puedeSalir()){
+            System.out.println("no puedes salir hasta que no bebas");
+        }
         else {
             setRoom(nextRoom);
             printLocationInfo();
@@ -239,6 +242,7 @@ public class Player
             }
             else{
                 System.out.println("acabas de beber");
+                currentRoom.haBebido();
             }
             currentRoom.remove(tempObj);
         }

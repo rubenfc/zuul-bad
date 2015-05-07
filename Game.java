@@ -43,14 +43,14 @@ public class Game
         Room entrada, pasillo, caverna, bifurcacion, habitacionTesoro, guarida, camaraOculta, salidaObstruida;
 
         // create the rooms
-        entrada = new Room("la entrada de una mazmorra", false);
-        pasillo = new Room("un pasillo de la mazmorra", false);
-        caverna = new Room("una caverna rocosa", true);
-        bifurcacion = new Room("el camino se divide en dos", false);
-        habitacionTesoro = new Room("una habitacion del tesoro", false);
-        guarida = new Room("la guarida del monstruo", false);
-        camaraOculta = new Room ("en una sala pequeña, a la que entras por un pequeño boquete", false);
-        salidaObstruida = new Room ("un pasillo que termina en una salida de la mazmorra, obstruida por un derrumbamiento", false);
+        entrada = new Room("la entrada de una mazmorra", false, true);
+        pasillo = new Room("un pasillo de la mazmorra", false, true);
+        caverna = new Room("una caverna rocosa", true, false);
+        bifurcacion = new Room("el camino se divide en dos", false, true);
+        habitacionTesoro = new Room("una habitacion del tesoro", false, true);
+        guarida = new Room("la guarida del monstruo", false, true);
+        camaraOculta = new Room ("en una sala pequeña, a la que entras por un pequeño boquete", false, true);
+        salidaObstruida = new Room ("un pasillo que termina en una salida de la mazmorra, obstruida por un derrumbamiento", false,true);
 
         // Añadimos objetos a las localizaciones
         entrada.addItem(new Item("piedra", "una piedra enorme", 50F, true, false, false));
